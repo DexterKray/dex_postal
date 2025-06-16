@@ -3,6 +3,7 @@
 Dependencies
 
 - OX_LIB
+- QBCore
 
 Download latest release.
 
