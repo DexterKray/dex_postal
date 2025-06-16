@@ -1,0 +1,40 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+}
+
+#postal-container {
+    position: absolute;
+    bottom: 5%;
+    right: 47.5%;
+    background: rgba(102, 99, 99, 0.6);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: move;
+    user-select: none;
+}
+
+#postal-container.moving {
+    opacity: 1;
+}
+
+.hidden {
+    display: none;
+}
+
+.save-button-container {
+    position: absolute;
+    bottom: 10%;
+    right: 2%;
+    background: rgba(102, 99, 99, 0.6);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    text-decoration: none;
+}
