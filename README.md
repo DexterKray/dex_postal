@@ -1,6 +1,6 @@
 # dex_postal
 
-Dependacies
+Dependencies
 
 - OX_LIB
 
