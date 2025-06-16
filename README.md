@@ -1,8 +1,9 @@
 # dex_postal
 
-Dependacies
+Dependencies
 
 - OX_LIB
+- QBCore
 
 Download latest release.
 
