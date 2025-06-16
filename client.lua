@@ -131,7 +131,7 @@ RegisterNUICallback('cancelMove', function(data, cb)
         title = "Postal Code",
         description = "Postal UI movement cancelled, reverting to last saved position.",
         type = "error",
-        duration = 5000
+        duration = 10000
     })
     TriggerServerEvent('postal:loadPositionClient')
     cb('ok')
