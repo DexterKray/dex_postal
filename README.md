@@ -13,6 +13,8 @@ ensure dex_postal
 
 PREVIEW : https://youtu.be/eRq9mthnIAc
 
+<img width="906" height="25" alt="image" src="https://github.com/user-attachments/assets/2506cb05-3262-483c-a60a-91431641e50e" />
+
 --
 
 Fully open source can change notify's / CSS styling / default position to where you would like. 
