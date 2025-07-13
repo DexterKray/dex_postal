@@ -10,8 +10,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (!postalContainer || !saveButton) {
         console.error('Element not found:', { postalContainer, saveButton });
-    } else {
-        console.log('Elements found:', { postalContainer, saveButton });
     }
 
     postalContainer.addEventListener('mousedown', startDragging);
@@ -19,7 +17,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function startDragging(e) {
         if (!postalContainer.classList.contains('moving')) {
-            console.log('Cannot drag: .moving class not present');
             return;
         }
         const rect = postalContainer.getBoundingClientRect();
@@ -28,7 +25,6 @@ document.addEventListener('DOMContentLoaded', function() {
         xOffset = e.clientX - currentX;
         yOffset = e.clientY - currentY;
         isDragging = true;
-        console.log('Started dragging at x:', currentX, 'y:', currentY);
     }
 
     document.addEventListener('mousemove', (e) => {
@@ -42,18 +38,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.addEventListener('mouseup', () => {
         if (isDragging) {
-            console.log('Stopped dragging at x:', currentX, 'y:', currentY);
             isDragging = false;
         }
     });
 
     document.addEventListener('keydown', (e) => {
         if (e.keyCode === 27 && postalContainer.classList.contains('moving')) {
-            console.log('ESC pressed, canceling move');
             fetch(`https://${GetParentResourceName()}/cancelMove`, {
                 method: 'POST',
                 body: JSON.stringify({})
-            }).then(resp => resp.json()).then(resp => console.log('Cancel response:', resp));
+            }).then(resp => resp.json()).then(resp => {}).catch(err => console.error('Cancel move error:', err));
         }
     });
 
@@ -69,18 +63,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function savePosition() {
-        console.log('Save button clicked');
         const vw = window.innerWidth;
         const vh = window.innerHeight;
         const rect = postalContainer.getBoundingClientRect();
         const xPercent = (rect.left / vw) * 100;
         const yPercent = (rect.top / vh) * 100;
-        console.log('Saving position: x=', xPercent, 'y=', yPercent);
         fetch(`https://${GetParentResourceName()}/savePosition`, {
             method: 'POST',
             body: JSON.stringify({ x: xPercent, y: yPercent })
         }).then(resp => resp.json()).then(resp => {
-            console.log('Save response:', resp);
             window.postMessage({
                 action: 'disableMove',
                 showSave: false
@@ -116,12 +107,10 @@ document.addEventListener('DOMContentLoaded', function() {
             postalContainer.classList.remove('hidden');
         }
         if (event.data.action === 'enableMove') {
-            console.log('Applying .moving class');
             postalContainer.classList.add('moving');
             saveButton.classList.remove('hidden');
         }
         if (event.data.action === 'disableMove') {
-            console.log('Removing .moving class');
             postalContainer.classList.remove('moving');
             saveButton.classList.add('hidden');
         }

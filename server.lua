@@ -4,7 +4,6 @@ RegisterServerEvent('postal:savePositionClient')
 AddEventHandler('postal:savePositionClient', function(x, y)
     local src = source
     local license = GetPlayerIdentifier(src, 0) -- Use the first identifier type (e.g., license)
-    print("Received savePositionClient event for source: " .. tostring(src) .. ", license: " .. tostring(license) .. ", x: " .. tostring(x) .. ", y: " .. tostring(y))
     if license and x and y then
         oxmysql:execute('INSERT INTO dex_postal_positions (license, x, y) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE x = ?, y = ?', 
             { license, x, y, x, y }, function(result)

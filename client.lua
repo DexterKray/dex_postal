@@ -137,9 +137,11 @@ RegisterCommand('movepostal', function()
         title = "Postal Code",
         description = isMovingPostal and "Drag the postal UI to move it. Click Save to store position or press ESC to cancel." or "Postal UI movement disabled.",
         type = "info",
-        duration = 5000
+        duration = 10000
     })
 end, false)
+
+TriggerEvent('chat:addSuggestion', '/hidepostal', 'Hide or unhide the postal code UI')
 
 RegisterCommand('hidepostal', function()
     if postalhidden == false then
@@ -170,8 +172,6 @@ RegisterCommand('hidepostal', function()
 end)
 
 RegisterNUICallback('savePosition', function(data, cb)
-    print("Save position callback received")
-    print("Data received: x=" .. tostring(data.x) .. ", y=" .. tostring(data.y))
     TriggerServerEvent('postal:savePositionClient', data.x, data.y)
     isMovingPostal = false
     SetNuiFocus(false, false)
