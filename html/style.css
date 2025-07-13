@@ -1,21 +1,33 @@
+@import "https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap";
+
 body {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    font-family: Arial, sans-serif;
+    font-family: Inter;
 }
 
 #postal-container {
     position: absolute;
     bottom: 5%;
     right: 47.5%;
-    background: rgba(102, 99, 99, 0.6);
+    background: #0000004c;
     color: white;
     padding: 10px 15px;
-    border-radius: 10px;
+    border-radius: 5px;
     font-size: 18px;
     cursor: move;
     user-select: none;
+    font-weight: 500;
+    transition: background-color 0.3s ease-in-out;
+}
+
+#postal-container.day-theme {
+    background: #0000004c;
+}
+
+#postal-container.night-theme {
+    background: #c2c2c24c;
 }
 
 #postal-container.moving {
@@ -27,14 +39,26 @@ body {
 }
 
 .save-button-container {
-    position: absolute;
-    bottom: 10%;
-    right: 2%;
-    background: rgba(102, 99, 99, 0.6);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #28a745;
     color: white;
-    padding: 10px 15px;
-    border-radius: 10px;
-    font-size: 18px;
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-size: 20px;
     cursor: pointer;
     text-decoration: none;
+    font-weight: 700;
+    border: 3px solid #ffffff;
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.save-button-container:hover {
+    background: #218838;
+    transform: translate(-50%, -50%) scale(1.05);
+    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.6);
 }

@@ -88,10 +88,26 @@ document.addEventListener('DOMContentLoaded', function() {
         }).catch(err => console.error('Save error:', err));
     }
 
+    function updateThemeBasedOnTime(hour, minute) {
+        // Check if it's day time (06:01 to 20:59) or night time (21:00 to 06:00)
+        const isDayTime = (hour > 6 || (hour === 6 && minute >= 1)) && hour < 21;
+        
+        if (isDayTime) {
+            postalContainer.classList.remove('night-theme');
+            postalContainer.classList.add('day-theme');
+        } else {
+            postalContainer.classList.remove('day-theme');
+            postalContainer.classList.add('night-theme');
+        }
+    }
+
     window.addEventListener('message', function(event) {
         if (event.data.action === 'updatePostal') {
             const postalCodeSpan = document.getElementById('postal-code');
             postalCodeSpan.innerText = `Postal: ${event.data.postal}`;
+        }
+        if (event.data.action === 'updateTimeTheme') {
+            updateThemeBasedOnTime(event.data.hour, event.data.minute);
         }
         if (event.data.action === 'hidePostal') {
             postalContainer.classList.add('hidden');

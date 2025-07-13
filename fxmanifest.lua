@@ -4,19 +4,15 @@ game 'gta5'
 author 'DexterKray'
 description 'Postal Script'
 
-version '1.0.0'
+version '1.2.0'
 
 lua54 'yes'
 
 shared_script '@ox_lib/init.lua'
 
-client_script {
-    'client.lua'
-}
+client_script 'client.lua'
 
-server_script {
-    'server.lua'
-}
+server_script 'server.lua'
 
 files {
     'html/index.html',

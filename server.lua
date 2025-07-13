@@ -9,14 +9,14 @@ AddEventHandler('postal:savePositionClient', function(x, y)
         oxmysql:execute('INSERT INTO dex_postal_positions (license, x, y) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE x = ?, y = ?', 
             { license, x, y, x, y }, function(result)
                 if result.affectedRows > 0 then
-                    TriggerClientEvent('ox_lib:notify', src, {
+                    lib.notify(src, {
                         title = 'Postal Code',
                         description = 'Position saved successfully.',
                         type = 'success',
                         duration = 5000
                     })
                 else
-                    TriggerClientEvent('ox_lib:notify', src, {
+                    lib.notify(src, {
                         title = 'Postal Code',
                         description = 'Failed to save position.',
                         type = 'error',
@@ -25,7 +25,7 @@ AddEventHandler('postal:savePositionClient', function(x, y)
                 end
             end)
     else
-        TriggerClientEvent('ox_lib:notify', src, {
+        lib.notify(src, {
             title = 'Postal Code',
             description = 'Failed to save position due to invalid data.',
             type = 'error',
