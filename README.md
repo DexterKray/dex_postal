@@ -32,3 +32,11 @@ Commands:
 /postal <postalcode> create a gps marker to specified postal number
 
 /hidepostal - Hides the postal for a player if they choose, uses a KVP to save the state to the players cache, so it persists over restarts 
+
+1.3.0 - Postal Hide and Show Exports
+
+Show the postal if hidden (checks KVP state so if a player the postal hidden its not shown again when this is closed)
+exports['dex_postal]:Show() 
+
+Hide the postal if not hidden (again check KVP for the state of the postal)
+exports['dex_postal]:Hide() 

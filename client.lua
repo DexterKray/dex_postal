@@ -1,4 +1,4 @@
-stringtoboolean={ ["true"]=true, ["false"]=false }
+stringtoboolean = { ["true"] = true, ["false"] = false }
 local postalcodes = {}
 local wasPaused = false
 local isMovingPostal = false
@@ -48,11 +48,11 @@ end)
 Citizen.CreateThread(function()
     local lastHour = -1
     local lastMinute = -1
-    
+
     while true do
         local hour = GetClockHours()
         local minute = GetClockMinutes()
-        
+
         if hour ~= lastHour or minute ~= lastMinute then
             SendNUIMessage({
                 action = "updateTimeTheme",
@@ -62,8 +62,8 @@ Citizen.CreateThread(function()
             lastHour = hour
             lastMinute = minute
         end
-        
-        Citizen.Wait(1000) 
+
+        Citizen.Wait(1000)
     end
 end)
 
@@ -82,7 +82,7 @@ Citizen.CreateThread(function()
             })
             wasPaused = false
         end
-        
+
         Citizen.Wait(300)
     end
 end)
@@ -99,7 +99,7 @@ end)
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded')
 AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
     TriggerServerEvent('postal:loadPositionClient')
-    postalhidden = stringtoboolean[GetResourceKvpString("postalUIHidden")]
+    postalhidden = stringtoboolean[GetResourceKvpString("postalUIHidden")] or false
     if postalhidden == true then
         SendNUIMessage({
             action = "hidePostal"
@@ -135,7 +135,9 @@ RegisterCommand('movepostal', function()
     })
     lib.notify({
         title = "Postal Code",
-        description = isMovingPostal and "Drag the postal UI to move it. Click Save to store position or press ESC to cancel." or "Postal UI movement disabled.",
+        description = isMovingPostal and
+            "Drag the postal UI to move it. Click Save to store position or press ESC to cancel." or
+            "Postal UI movement disabled.",
         type = "info",
         duration = 10000
     })
@@ -143,33 +145,64 @@ end, false)
 
 TriggerEvent('chat:addSuggestion', '/hidepostal', 'Hide or unhide the postal code UI')
 
-RegisterCommand('hidepostal', function()
+function hidePostalUI()
     if postalhidden == false then
         SendNUIMessage({
             action = "hidePostal"
         })
         postalhidden = true
         SetResourceKvp("postalUIHidden", "true")
-    lib.notify({
-        title = "Postal Code",
-        description = "Postal hidden.",
-        type = "info",
-        duration = 5000
-    })
+        lib.notify({
+            title = "Postal Code",
+            description = "Postal hidden.",
+            type = "info",
+            duration = 5000
+        })
     elseif postalhidden == true then
         SendNUIMessage({
             action = "showPostal"
         })
         postalhidden = false
         SetResourceKvp("postalUIHidden", "false")
-    lib.notify({
-        title = "Postal Code",
-        description = "Postal unhidden.",
-        type = "info",
-        duration = 5000
-    })
+        lib.notify({
+            title = "Postal Code",
+            description = "Postal unhidden.",
+            type = "info",
+            duration = 5000
+        })
     end
+end
+
+function postalExportHide()
+    if GetResourceKvpString("postalUIHidden") == "true" then return end
+    if postalhidden == false then
+        SendNUIMessage({
+            action = "hidePostal"
+        })
+        postalhidden = true
+    end
+end
+
+exports('Hide', postalExportHide)
+
+function postalExportShow()
+    if GetResourceKvpString("postalUIHidden") == "true" then return end
+    if postalhidden == true then
+        SendNUIMessage({ action = "showPostal" })
+        postalhidden = false
+    end
+end
+
+exports('Show', postalExportShow)
+
+
+AddEventHandler('postal:togglePostalUI', function()
+    hidePostalUI()
 end)
+
+RegisterCommand('hidepostal', function()
+    hidePostalUI()
+end, false)
 
 RegisterNUICallback('savePosition', function(data, cb)
     TriggerServerEvent('postal:savePositionClient', data.x, data.y)

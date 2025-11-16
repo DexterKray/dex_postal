@@ -4,7 +4,7 @@ game 'gta5'
 author 'DexterKray'
 description 'Postal Script'
 
-version '1.2.0'
+version '1.3.0'
 
 lua54 'yes'
 
