@@ -17,7 +17,6 @@ Preview: https://youtu.be/eRq9mthnIAc
 ## Requirements
 
 - `OX_LIB`
-- `QBCore`
 
 ## Installation
 
