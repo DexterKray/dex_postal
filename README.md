@@ -71,10 +71,8 @@ These respect the player's saved KVP state.
 - `server.lua` — server-side commands and DB interactions.
 - `postalcodes.json` — add or edit postal entries for your map.
 - `html/` — UI files (`index.html`, `script.js`, `style.css`).
-- `INSTALL/dexpostal.sql` — optional SQL for DB schema.
+- `INSTALL/dexpostal.sql` — SQL for DB schema.
 
 ## License & Credits
 
 This resource is fully open source — modify the CSS, notifications, or default positions as you like. Created by DexterKray.
-
-If you'd like, I can also tidy up the UI, update the exports docs in-code, or create a small config file for easier server-side configuration. Want me to commit this change?
