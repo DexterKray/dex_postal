@@ -27,7 +27,7 @@ Preview: https://youtu.be/eRq9mthnIAc
 ensure dex_postal
 ```
 
-3. (Optional) Import the SQL in `INSTALL/dexpostal.sql` if you want to use the included DB schema.
+3. Import the SQL in `INSTALL/dexpostal.sql` if you want to use the included DB schema.
 4. Edit `postalcodes.json` to add or adjust postal codes for your map.
 
 ## Configuration
