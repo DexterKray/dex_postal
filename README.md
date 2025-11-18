@@ -1,42 +1,81 @@
 # dex_postal
 
-<img width="162" height="69" alt="image" src="https://github.com/user-attachments/assets/4dba23b9-1558-4f75-9ae7-0c71aa39558e" />
+Lightweight postal code display for QBCore/QBox — shows player's current postal, lets players create GPS markers, move or hide the HUD, and persist settings.
 
-Dependencies
+Preview: https://youtu.be/eRq9mthnIAc
 
-- OX_LIB
-- QBCore
+---
 
-Drag and drop into your resources folder
+## Features
 
-add your maps postal codes into the postalcodes.json
+- Shows a small, styled postal HUD that updates live.
+- Create GPS waypoints to postal codes with `/postal <postal>`.
+- Move the HUD anywhere on the screen with `/movepostal` (position saved to player data).
+- Hide/show the HUD per-player; hidden state is persisted with a KVP so it survives restarts.
+- Day/night background transitions for readability.
 
+## Requirements
+
+- `OX_LIB`
+- `QBCore`
+
+## Installation
+
+1. Drop the `dex_postal` folder into your server `resources` directory.
+2. Add this to your server config (e.g. `server.cfg`):
+
+```
 ensure dex_postal
+```
 
-PREVIEW : https://youtu.be/eRq9mthnIAc
+3. (Optional) Import the SQL in `INSTALL/dexpostal.sql` if you want to use the included DB schema.
+4. Edit `postalcodes.json` to add or adjust postal codes for your map.
 
-<img width="906" height="25" alt="image" src="https://github.com/user-attachments/assets/2506cb05-3262-483c-a60a-91431641e50e" />
+## Configuration
 
---
+- Edit `postalcodes.json` to add postal code definitions for your map/locations.
+- Frontend UI lives in the `html/` folder — you can customize `style.css` and `script.js` to change appearance or behaviour.
 
-Fully open source can change notify's / CSS styling / default position to where you would like. 
+## Commands
 
-Background transitions with game time, so postal is easier to see at night. 
+- `/movepostal` — Enter move mode to position the postal HUD; position is saved to the player's TX license in the DB.
+- `/postal <postalcode>` — Create a GPS marker to the specified postal code.
+- `/hidepostal` — Toggle hiding the postal HUD for the current player. Hidden state is saved using a KVP.
 
-Restarting the postal live while loaded in as a player the postal will disapear as the postal is loaded on the QBCore:OnPlayerLoaded event, just do /hidepostal twice and it will reappear. 
+Note: If you restart the resource while a player is online the HUD may disappear in some cases; running `/hidepostal` twice will restore it.
 
-Commands:
+## Exports (API)
 
-/movepostal - allows users to move their postal location anywhere on their screen and its position is saved to the database with thier tx licence.
+You can show or hide the postal HUD from other resources:
 
-/postal <postalcode> create a gps marker to specified postal number
+```lua
+exports['dex_postal']:Show()
+exports['dex_postal']:Hide()
+```
 
-/hidepostal - Hides the postal for a player if they choose, uses a KVP to save the state to the players cache, so it persists over restarts 
+These respect the player's saved KVP state.
 
-1.3.0 - Postal Hide and Show Exports
+## Troubleshooting
 
-Show the postal if hidden (checks KVP state so if a player the postal hidden its not shown again when this is closed)
-exports['dex_postal]:Show() 
+- HUD not showing after restart: try `/hidepostal` twice while in-game.
+- Postal codes not found: confirm your `postalcodes.json` entries match the values you pass to `/postal`.
 
-Hide the postal if not hidden (again check KVP for the state of the postal)
-exports['dex_postal]:Hide() 
+## Customization
+
+- Styling: edit `html/style.css`.
+- Behaviour: edit `html/script.js` and server/client Lua as needed.
+- Notifications: swap to your preferred notify implementation if you don't use the included one.
+
+## Files of Interest
+
+- `client.lua` — client-side logic and HUD handling.
+- `server.lua` — server-side commands and DB interactions.
+- `postalcodes.json` — add or edit postal entries for your map.
+- `html/` — UI files (`index.html`, `script.js`, `style.css`).
+- `INSTALL/dexpostal.sql` — optional SQL for DB schema.
+
+## License & Credits
+
+This resource is fully open source — modify the CSS, notifications, or default positions as you like. Created by DexterKray.
+
+If you'd like, I can also tidy up the UI, update the exports docs in-code, or create a small config file for easier server-side configuration. Want me to commit this change?
